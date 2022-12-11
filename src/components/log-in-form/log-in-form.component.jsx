@@ -37,13 +37,13 @@ const LogInForm = () => {
       resetFormFields();
       console.log(result);
     } catch (error) {
-      if (
-        error.code === 'auth/user-not-found' ||
-        error.code === 'auth/wrong-password'
-      ) {
-        alert('Wrong credentials. Please try again.');
-      } else {
-        console.log('error logging in user', error);
+      switch (error.code) {
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          alert('Wrong credentials. Please try again.');
+          break;
+        default:
+          console.log('error logging in user', error);
       }
     }
   };
@@ -79,7 +79,7 @@ const LogInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Log In</Button>
-          <Button buttonType="google" onClick={logInWithGoogle}>
+          <Button type="button" buttonType="google" onClick={logInWithGoogle}>
             Log In with Google
           </Button>
         </div>
