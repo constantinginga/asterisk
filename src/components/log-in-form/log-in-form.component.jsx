@@ -1,12 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 
 import {
   logInWithGooglePopup,
   logInWithEmailAndPassword,
-  createUserDocumentFromAuth,
 } from '../../utils/firebase/firebase.utils';
-
-import { UserContext } from '../../contexts/user.context';
 
 import Button from '../../components/button/button.component';
 import FormInput from '../form-input/form-input.component';
@@ -22,25 +19,16 @@ const LogInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const { setCurrentUser } = useContext(UserContext);
-
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
-  };
-
-  const logInWithGoogle = async () => {
-    const { user } = await logInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
-    setCurrentUser(user);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { user } = await logInWithEmailAndPassword(email, password);
+      await logInWithEmailAndPassword(email, password);
       resetFormFields();
-      setCurrentUser(user);
     } catch (error) {
       switch (error.code) {
         case 'auth/user-not-found':
@@ -84,7 +72,10 @@ const LogInForm = () => {
         />
         <div className="buttons-container">
           <Button type="submit">Log In</Button>
-          <Button type="button" buttonType="google" onClick={logInWithGoogle}>
+          <Button
+            type="button"
+            buttonType="google"
+            onClick={logInWithGooglePopup}>
             Log In with Google
           </Button>
         </div>
