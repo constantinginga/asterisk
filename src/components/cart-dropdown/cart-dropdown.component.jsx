@@ -12,6 +12,10 @@ const CartDropdown = () => {
   const { items } = useContext(CartContext);
   const navigate = useNavigate();
 
+  const checkoutHandler = () => {
+    navigate('/checkout');
+  };
+
   return (
     <div className="cart-dropdown-container">
       <div className="cart-items">
@@ -19,12 +23,7 @@ const CartDropdown = () => {
           <CartItem key={item.id} item={item} />
         ))}
       </div>
-      <Button
-        onClick={() => {
-          navigate('/checkout');
-        }}>
-        Go to checkout
-      </Button>
+      <Button onClick={checkoutHandler}>Go to checkout</Button>
     </div>
   );
 };
