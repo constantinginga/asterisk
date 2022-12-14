@@ -40,6 +40,10 @@ export const CartProvider = ({ children }) => {
     setItems(addCartItem(items, productToAdd));
   };
 
+  const changeItemQuantity = (item, quantity) => {
+    setItems(changeItemQuantity);
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   return (
     <CartContext.Provider
