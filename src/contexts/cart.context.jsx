@@ -1,5 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 
+const clearCartItem = (items, itemToClear) =>
+  items.filter((item) => item.id !== itemToClear.id);
+
 const addCartItem = (items, productToAdd) => {
   // if the item already exists in the cart, increase the quantity
   const existingItem = items.find((item) => item.id === productToAdd.id);
@@ -19,7 +22,7 @@ const removeCartItem = (items, itemToRemove) => {
   const existingItem = items.find((item) => item.id === itemToRemove.id);
 
   if (existingItem && existingItem.quantity === 1) {
-    return items.filter((item) => item.id !== itemToRemove.id);
+    return clearCartItem(items, itemToRemove);
   }
 
   return items.map((item) =>
@@ -34,6 +37,8 @@ export const CartContext = createContext({
   setIsOpen: () => null,
   items: [],
   addItemToCart: () => null,
+  removeItemFromCart: () => null,
+  clearItemFromCart: () => null,
   totalQuantity: 0,
   totalAmount: 0,
 });
@@ -68,17 +73,9 @@ export const CartProvider = ({ children }) => {
     setItems(removeCartItem(items, itemToRemove));
   };
 
-  // const changeItemQuantity = (item, quantity) => {
-  //   // if the quantity is 0, remove the item from the cart
-  //   if (quantity === 0) {
-  //     removeItemFromCart(item);
-  //     return;
-  //   }
-  //   // otherwise, update the quantity
-  //   setItems(
-  //     items.map((i) => (i.id === item.id ? { ...i, quantity: quantity } : i))
-  //   );
-  // };
+  const clearItemFromCart = (item) => {
+    setItems(clearCartItem(items, item));
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -91,6 +88,7 @@ export const CartProvider = ({ children }) => {
         totalQuantity,
         totalAmount,
         removeItemFromCart,
+        clearItemFromCart,
       }}>
       {children}
     </CartContext.Provider>
