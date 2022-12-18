@@ -6,7 +6,11 @@ import { CartContext } from '../../contexts/cart.context';
 import Button from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
 
-import './cart-dropdown.styles.scss';
+import {
+  CartDropdownContainer,
+  CartItems,
+  EmptyMessage,
+} from './cart-dropdown.styles';
 
 const CartDropdown = () => {
   const { items } = useContext(CartContext);
@@ -17,14 +21,19 @@ const CartDropdown = () => {
   };
 
   return (
-    <div className="cart-dropdown-container">
-      <div className="cart-items">
+    <CartDropdownContainer>
+      <CartItems className="cart-items">
+        {items.length ? (
+          items.map((item) => <CartItem key={item.id} item={item} />)
+        ) : (
+          <EmptyMessage>Your cart is empty.</EmptyMessage>
+        )}
         {items.map((item) => (
           <CartItem key={item.id} item={item} />
         ))}
-      </div>
+      </CartItems>
       <Button onClick={checkoutHandler}>Go to checkout</Button>
-    </div>
+    </CartDropdownContainer>
   );
 };
 
