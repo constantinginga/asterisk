@@ -10,7 +10,7 @@ import Button, {
 } from '../../components/button/button.component';
 import FormInput from '../form-input/form-input.component';
 
-import './log-in-form.styles.scss';
+import { LogInContainer, ButtonsContainer } from './log-in-form.styles';
 
 const defaultFormFields = {
   email: '',
@@ -49,7 +49,7 @@ const LogInForm = () => {
   };
 
   return (
-    <div className="log-in-container">
+    <LogInContainer>
       <h2>I already have an account</h2>
       <span>Log in with your email and password</span>
       <form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ const LogInForm = () => {
           onChange={handleChange}
           value={password}
         />
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type="submit">Log In</Button>
           <Button
             type="button"
@@ -80,9 +80,9 @@ const LogInForm = () => {
             onClick={logInWithGooglePopup}>
             Log In with Google
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </LogInContainer>
   );
 };
 
