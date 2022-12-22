@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useReducer } from 'react';
 
 const clearCartItem = (items, itemToClear) =>
   items.filter((item) => item.id !== itemToClear.id);
@@ -34,7 +34,7 @@ const removeCartItem = (items, itemToRemove) => {
 
 export const CartContext = createContext({
   isOpen: false,
-  setIsOpen: () => null,
+  toggleCart: () => null,
   items: [],
   addItemToCart: () => null,
   removeItemFromCart: () => null,
@@ -43,46 +43,76 @@ export const CartContext = createContext({
   totalAmount: 0,
 });
 
+export const CART_ACTIONS = {
+  ADD_ITEM: 'ADD_ITEM',
+  REMOVE_ITEM: 'REMOVE_ITEM',
+  CLEAR_ITEM: 'CLEAR_ITEM',
+  TOGGLE_CART: 'TOGGLE_CART',
+};
+
+export const INITIAL_STATE = {
+  isOpen: false,
+  items: [],
+  totalQuantity: 0,
+  totalAmount: 0,
+};
+
+const cartReducer = (state, action) => {
+  const { type, payload } = action;
+  switch (type) {
+    case CART_ACTIONS.ADD_ITEM:
+      return {
+        ...state,
+        items: addCartItem(state.items, payload),
+        totalQuantity: state.totalQuantity + 1,
+        totalAmount: state.totalAmount + payload.price,
+      };
+    case CART_ACTIONS.REMOVE_ITEM:
+      return {
+        ...state,
+        items: removeCartItem(state.items, payload),
+        totalQuantity: state.totalQuantity - 1,
+        totalAmount: state.totalAmount - payload.price,
+      };
+    case CART_ACTIONS.CLEAR_ITEM:
+      return {
+        ...state,
+        items: clearCartItem(state.items, payload),
+        totalQuantity: state.totalQuantity - payload.quantity,
+        totalAmount: state.totalAmount - payload.price * payload.quantity,
+      };
+    case CART_ACTIONS.TOGGLE_CART:
+      return {
+        ...state,
+        isOpen: !state.isOpen,
+      };
+    default:
+      throw new Error(`Invalid action type ${type} in cartReducer`);
+  }
+};
+
 export const CartProvider = ({ children }) => {
-  const [items, setItems] = useState([]);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [{ items, totalQuantity, totalAmount, isOpen }, dispatch] = useReducer(
+    cartReducer,
+    INITIAL_STATE
+  );
 
-  // set quantity when items change
-  useEffect(() => {
-    const newTotalQuantity = items.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
-    setTotalQuantity(newTotalQuantity);
-  }, [items]);
+  const addItemToCart = (item) =>
+    dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: item });
 
-  useEffect(() => {
-    const newTotalAmount = items.reduce(
-      (acc, item) => acc + item.quantity * item.price,
-      0
-    );
-    setTotalAmount(newTotalAmount);
-  }, [items]);
+  const removeItemFromCart = (item) =>
+    dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: item });
 
-  const addItemToCart = (productToAdd) => {
-    setItems(addCartItem(items, productToAdd));
-  };
+  const clearItemFromCart = (item) =>
+    dispatch({ type: CART_ACTIONS.CLEAR_ITEM, payload: item });
 
-  const removeItemFromCart = (itemToRemove) => {
-    setItems(removeCartItem(items, itemToRemove));
-  };
+  const toggleCart = () => dispatch({ type: CART_ACTIONS.TOGGLE_CART });
 
-  const clearItemFromCart = (item) => {
-    setItems(clearCartItem(items, item));
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
   return (
     <CartContext.Provider
       value={{
         isOpen,
-        setIsOpen,
+        toggleCart,
         items,
         addItemToCart,
         totalQuantity,
