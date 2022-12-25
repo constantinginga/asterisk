@@ -1,5 +1,7 @@
 import { createContext, useReducer } from 'react';
 
+import { createAction } from '../utils/reducer/reducer.utils';
+
 const clearCartItem = (items, itemToClear) =>
   items.filter((item) => item.id !== itemToClear.id);
 
@@ -44,9 +46,7 @@ export const CartContext = createContext({
 });
 
 export const CART_ACTIONS = {
-  ADD_ITEM: 'ADD_ITEM',
-  REMOVE_ITEM: 'REMOVE_ITEM',
-  CLEAR_ITEM: 'CLEAR_ITEM',
+  SET_ITEMS: 'SET_ITEMS',
   TOGGLE_CART: 'TOGGLE_CART',
 };
 
@@ -60,26 +60,10 @@ export const INITIAL_STATE = {
 const cartReducer = (state, action) => {
   const { type, payload } = action;
   switch (type) {
-    case CART_ACTIONS.ADD_ITEM:
+    case CART_ACTIONS.SET_ITEMS:
       return {
         ...state,
-        items: addCartItem(state.items, payload),
-        totalQuantity: state.totalQuantity + 1,
-        totalAmount: state.totalAmount + payload.price,
-      };
-    case CART_ACTIONS.REMOVE_ITEM:
-      return {
-        ...state,
-        items: removeCartItem(state.items, payload),
-        totalQuantity: state.totalQuantity - 1,
-        totalAmount: state.totalAmount - payload.price,
-      };
-    case CART_ACTIONS.CLEAR_ITEM:
-      return {
-        ...state,
-        items: clearCartItem(state.items, payload),
-        totalQuantity: state.totalQuantity - payload.quantity,
-        totalAmount: state.totalAmount - payload.price * payload.quantity,
+        ...payload,
       };
     case CART_ACTIONS.TOGGLE_CART:
       return {
@@ -97,16 +81,34 @@ export const CartProvider = ({ children }) => {
     INITIAL_STATE
   );
 
+  const updateCartItemsReducer = (newItems) => {
+    const newTotalQuantity = newItems.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+    const newTotalAmount = newItems.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+    dispatch(
+      createAction(CART_ACTIONS.SET_ITEMS, {
+        items: newItems,
+        totalQuantity: newTotalQuantity,
+        totalAmount: newTotalAmount,
+      })
+    );
+  };
+
   const addItemToCart = (item) =>
-    dispatch({ type: CART_ACTIONS.ADD_ITEM, payload: item });
+    updateCartItemsReducer(addCartItem(items, item));
 
   const removeItemFromCart = (item) =>
-    dispatch({ type: CART_ACTIONS.REMOVE_ITEM, payload: item });
+    updateCartItemsReducer(removeCartItem(items, item));
 
   const clearItemFromCart = (item) =>
-    dispatch({ type: CART_ACTIONS.CLEAR_ITEM, payload: item });
+    updateCartItemsReducer(clearCartItem(items, item));
 
-  const toggleCart = () => dispatch({ type: CART_ACTIONS.TOGGLE_CART });
+  const toggleCart = () => dispatch(createAction(CART_ACTIONS.TOGGLE_CART));
 
   return (
     <CartContext.Provider
