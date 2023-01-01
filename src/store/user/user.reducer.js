@@ -1,6 +1,4 @@
-const USER_ACTIONS = {
-  SET_CURRENT_USER: 'SET_CURRENT_USER',
-};
+import { USER_ACTIONS } from "./user.types";
 
 const INITIAL_STATE = {
   currentUser: null,
