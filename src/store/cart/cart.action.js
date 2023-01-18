@@ -42,4 +42,6 @@ export const removeItemFromCart = (items, item) =>
 export const clearItemFromCart = (items, item) =>
     createAction(CART_ACTIONS.SET_ITEMS, clearCartItem(items, item));
 
+export const clearCart = () => createAction(CART_ACTIONS.SET_ITEMS, []);
+
 export const toggleCart = () => createAction(CART_ACTIONS.TOGGLE_CART);
