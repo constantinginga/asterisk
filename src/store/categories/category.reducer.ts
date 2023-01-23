@@ -22,7 +22,7 @@ const INITIAL_STATE: CategoriesState = {
 
 export const categoryReducer = (
   state = INITIAL_STATE,
-  action = {} as AnyAction
+  action: AnyAction
 ): CategoriesState => {
   if (fetchCategoriesStart.match(action)) {
     return {
