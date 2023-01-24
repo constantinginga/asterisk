@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, FormEvent, ChangeEvent } from 'react';
+import { AuthError, AuthErrorCodes } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 
 import {
@@ -6,9 +7,7 @@ import {
   googleSignInStart,
 } from '../../store/user/user.action';
 
-import Button, {
-  BUTTON_TYPE_CLASSES,
-} from '../../components/button/button.component';
+import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
 import FormInput from '../form-input/form-input.component';
 
@@ -28,16 +27,16 @@ const LogInForm = () => {
     setFormFields(defaultFormFields);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
       dispatch(emailSignInStart(email, password));
       resetFormFields();
     } catch (error) {
-      switch (error.code) {
-        case 'auth/user-not-found':
-        case 'auth/wrong-password':
+      switch ((error as AuthError).code) {
+        case AuthErrorCodes.USER_DELETED:
+        case AuthErrorCodes.INVALID_PASSWORD:
           alert('Wrong credentials. Please try again.');
           break;
         default:
@@ -50,7 +49,7 @@ const LogInForm = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
   };

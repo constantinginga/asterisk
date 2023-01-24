@@ -45,8 +45,10 @@ const removeCartItem = (
   );
 };
 
-export const addItemToCart = (items: CartItem[], item: CartItem): SetItems =>
-  setCartItems(addCartItem(items, item));
+export const addItemToCart = (
+  items: CartItem[],
+  item: CategoryItem
+): SetItems => setCartItems(addCartItem(items, item));
 
 export const removeItemFromCart = (
   items: CartItem[],

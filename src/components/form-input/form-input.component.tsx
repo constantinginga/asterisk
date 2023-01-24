@@ -1,6 +1,12 @@
+import { FC, InputHTMLAttributes } from 'react';
+
 import { FormInputLabel, Input, Group } from './form-input.styles';
 
-const FormInput = ({ label, ...otherProps }) => {
+type FormInputProps = {
+  label?: string;
+} & InputHTMLAttributes<HTMLInputElement>;
+
+const FormInput: FC<FormInputProps> = ({ label, ...otherProps }) => {
   return (
     <Group>
       {/* if the user typed in the input anything, shrink label */}
@@ -9,7 +15,11 @@ const FormInput = ({ label, ...otherProps }) => {
       {label && (
         <FormInputLabel
           htmlFor={otherProps.id}
-          shrink={otherProps.value.length}>
+          shrink={Boolean(
+            otherProps.value &&
+              typeof otherProps.value === 'string' &&
+              otherProps.value.length
+          )}>
           {label}
         </FormInputLabel>
       )}
