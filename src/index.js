@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import './index.scss';
 import App from './App';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -10,6 +9,7 @@ import { store, persistor } from './store/store';
 import reportWebVitals from './reportWebVitals';
 
 import { stripePromise } from './utils/stripe/stripe.utils';
+import { GlobalStyle } from './global.styles';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,7 +18,10 @@ root.render(
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
           <Elements stripe={stripePromise}>
-            <App />
+            <Fragment>
+              <GlobalStyle />
+              <App />
+            </Fragment>
           </Elements>
         </BrowserRouter>
       </PersistGate>
