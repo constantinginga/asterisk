@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { CategoryItem } from '../../store/categories/category.types';
@@ -24,7 +24,10 @@ const ProductCard: FC<ProductCardProps> = ({ product }) => {
   const cartItems = useSelector(selectCartItems);
   const dispatch = useDispatch();
 
-  const addProductToCart = () => dispatch(addItemToCart(cartItems, product));
+  const addProductToCart = useCallback(
+    () => dispatch(addItemToCart(cartItems, product)),
+    [dispatch, cartItems, product]
+  );
 
   return (
     <ProductCardContainer>

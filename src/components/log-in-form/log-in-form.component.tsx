@@ -1,4 +1,4 @@
-import { useState, FormEvent, ChangeEvent } from 'react';
+import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 
@@ -23,9 +23,9 @@ const LogInForm = () => {
   const { email, password } = formFields;
   const dispatch = useDispatch();
 
-  const resetFormFields = () => {
+  const resetFormFields = useCallback(() => {
     setFormFields(defaultFormFields);
-  };
+  }, []);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,9 +45,9 @@ const LogInForm = () => {
     }
   };
 
-  const handleLoginWithGoogle = () => {
+  const handleLoginWithGoogle = useCallback(() => {
     dispatch(googleSignInStart());
-  };
+  }, [dispatch]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

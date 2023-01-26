@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -16,9 +17,10 @@ const CartDropdown = () => {
   const items = useSelector(selectCartItems);
   const navigate = useNavigate();
 
-  const checkoutHandler = () => {
+  // navigate never changes here, it is included to get rid of the warning
+  const checkoutHandler = useCallback(() => {
     navigate('/checkout');
-  };
+  }, [navigate]);
 
   return (
     <CartDropdownContainer>
