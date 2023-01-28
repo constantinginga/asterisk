@@ -27,12 +27,12 @@ import {
 import { Category } from '../../store/categories/category.types';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyDv36clcxddpHqjkTkNU8ZpV_UR93k1aRk',
-  authDomain: 'crwn-clothing-db-2c571.firebaseapp.com',
-  projectId: 'crwn-clothing-db-2c571',
-  storageBucket: 'crwn-clothing-db-2c571.appspot.com',
-  messagingSenderId: '271037194534',
-  appId: '1:271037194534:web:80f2b6863a5fb5afb661e7',
+  apiKey: 'AIzaSyAgIg8aWGWHQhkSOIYM3LmljhlNK120YwA',
+  authDomain: 'asterisk-55e38.firebaseapp.com',
+  projectId: 'asterisk-55e38',
+  storageBucket: 'asterisk-55e38.appspot.com',
+  messagingSenderId: '302510791684',
+  appId: '1:302510791684:web:9a4d698edf77c8e267a951',
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
