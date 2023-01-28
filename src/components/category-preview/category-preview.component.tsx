@@ -4,9 +4,11 @@ import { CategoryItem } from '../../store/categories/category.types';
 
 import ProductCard from '../product-card/product-card.component';
 
+import { IoIosArrowForward } from 'react-icons/io';
+
 import {
   CategoryPreviewContainer,
-  Title,
+  CategoryLink,
   Preview,
 } from './category-preview.styles';
 
@@ -19,7 +21,10 @@ const CategoryPreview: FC<CategoryPreviewProps> = ({ title, products }) => {
   return (
     <CategoryPreviewContainer>
       <h2>
-        <Title to={title}>{title.toUpperCase()}</Title>
+        <CategoryLink to={title}>
+          <span>{`${title.toUpperCase()}`}</span>
+          <IoIosArrowForward />
+        </CategoryLink>
       </h2>
       <Preview>
         {products

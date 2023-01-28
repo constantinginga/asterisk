@@ -8,10 +8,13 @@ export const CategoryPreviewContainer = styled.div`
   margin-bottom: 30px;
 `;
 
-export const Title = styled(Link)`
+export const CategoryLink = styled(Link)`
   font-size: 28px;
-  margin-bottom: 25px;
+  // margin-bottom: 25px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0 0.25rem;
 `;
 
 export const Preview = styled.div`

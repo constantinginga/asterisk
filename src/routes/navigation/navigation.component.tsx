@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/crown.svg';
+import { ReactComponent as Logo } from '../../assets/logo.svg';
 
 import { signOutStart } from '../../store/user/user.action';
 
