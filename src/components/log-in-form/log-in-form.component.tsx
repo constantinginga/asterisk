@@ -1,11 +1,24 @@
-import { useState, useCallback, FormEvent, ChangeEvent } from 'react';
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  FormEvent,
+  ChangeEvent,
+} from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthError, AuthErrorCodes } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   emailSignInStart,
   googleSignInStart,
 } from '../../store/user/user.action';
+
+import {
+  selectUserError,
+  selectCurrentUser,
+} from '../../store/user/user.selector';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
@@ -19,30 +32,41 @@ const defaultFormFields = {
 };
 
 const LogInForm = () => {
+  const isMounted = useRef(false);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
+  const userError = useSelector(selectUserError);
+  const currentUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const resetFormFields = useCallback(() => {
     setFormFields(defaultFormFields);
   }, []);
 
+  useEffect(() => {
+    if (isMounted.current) {
+      if (currentUser) navigate('/');
+      else if (userError) {
+        switch ((userError as AuthError).code) {
+          case AuthErrorCodes.USER_DELETED:
+          case AuthErrorCodes.INVALID_PASSWORD:
+            alert('Wrong credentials. Please try again.');
+            break;
+          case AuthErrorCodes.TOO_MANY_ATTEMPTS_TRY_LATER:
+            alert('Too many attempts. Please try again later.');
+            break;
+          default:
+            alert(`error logging in user: ${userError}`);
+        }
+      }
+    } else isMounted.current = true;
+  }, [userError, currentUser, navigate]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    try {
-      dispatch(emailSignInStart(email, password));
-      resetFormFields();
-    } catch (error) {
-      switch ((error as AuthError).code) {
-        case AuthErrorCodes.USER_DELETED:
-        case AuthErrorCodes.INVALID_PASSWORD:
-          alert('Wrong credentials. Please try again.');
-          break;
-        default:
-          console.log('error logging in user', error);
-      }
-    }
+    dispatch(emailSignInStart(email, password));
+    resetFormFields();
   };
 
   const handleLoginWithGoogle = useCallback(() => {

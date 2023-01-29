@@ -10,3 +10,8 @@ export const selectCurrentUser = createSelector(
   [selectUserReducer],
   (userSlice) => userSlice.currentUser
 );
+
+export const selectUserError = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.error
+);
