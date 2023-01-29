@@ -18,11 +18,12 @@ export const CartDropdownContainer = styled.div`
   top: 90px;
   right: 40px;
   z-index: 5;
+  border-radius: 0.5rem;
 
   ${BaseButton},
   ${GoogleButton},
   ${InvertedButton} {
-    margin-top: auto;
+    margin-top: 0.5rem;
   }
 
   @media screen and (max-width: 800px) {

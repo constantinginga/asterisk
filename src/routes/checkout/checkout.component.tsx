@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { useSelector } from 'react-redux';
 
 import {
@@ -10,6 +11,8 @@ import PaymentForm from '../../components/payment-form/payment-form.component';
 
 import {
   CheckoutContainer,
+  PaymentContainer,
+  SummaryContainer,
   Header,
   HeaderBlock,
   Total,
@@ -21,28 +24,36 @@ const Checkout = () => {
 
   return (
     <CheckoutContainer>
-      <Header>
-        <HeaderBlock>
-          <span>Product</span>
-        </HeaderBlock>
-        <HeaderBlock>
-          <span>Description</span>
-        </HeaderBlock>
-        <HeaderBlock>
-          <span>Quantity</span>
-        </HeaderBlock>
-        <HeaderBlock>
-          <span>Price</span>
-        </HeaderBlock>
-        <HeaderBlock>
-          <span>Remove</span>
-        </HeaderBlock>
-      </Header>
-      {items.map((item) => (
-        <CheckoutItem key={item.id} item={item} />
-      ))}
-      <Total>Total: ${totalAmount}</Total>
-      <PaymentForm />
+      <SummaryContainer>
+        <h3>Order Summary</h3>
+        <Fragment>
+          <Header>
+            <HeaderBlock>
+              <span>Product</span>
+            </HeaderBlock>
+            <HeaderBlock>
+              <span>Description</span>
+            </HeaderBlock>
+            <HeaderBlock>
+              <span>Quantity</span>
+            </HeaderBlock>
+            <HeaderBlock>
+              <span>Price</span>
+            </HeaderBlock>
+            <HeaderBlock>
+              <span>Remove</span>
+            </HeaderBlock>
+          </Header>
+          {items.map((item) => (
+            <CheckoutItem key={item.id} item={item} />
+          ))}
+          <Total>Total: ${totalAmount}</Total>
+        </Fragment>
+      </SummaryContainer>
+      <PaymentContainer>
+        <h3>Payment</h3>
+        <PaymentForm />
+      </PaymentContainer>
     </CheckoutContainer>
   );
 };

@@ -18,27 +18,27 @@ export const ProductCardContainer = styled.div`
 
   button {
     width: 80%;
-    opacity: 0.7;
     position: absolute;
     top: 255px;
     display: none;
+    transition: all 0.2s ease-in-out;
   }
 
   &:hover {
     img {
-      opacity: 0.8;
+      transition: all 0.2s ease-in-out;
     }
 
     button {
-      opacity: 0.85;
       display: flex;
+      transition: all 0.2s ease-in-out;
     }
   }
 
   @media screen and (max-width: 800px) {
     button {
       display: flex;
-      opacity: 0.9;
+      // opacity: 0.9;
       min-width: unset;
       padding: 0 10px;
     }

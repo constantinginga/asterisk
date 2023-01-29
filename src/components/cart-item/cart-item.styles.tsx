@@ -8,7 +8,7 @@ export const CartItemContainer = styled.div`
 `;
 
 export const ItemDetails = styled.div`
-  width: 70%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -20,6 +20,14 @@ export const Name = styled.span`
   font-size: 16px;
 `;
 
+export const ItemImageContainer = styled.div`
+  width: 40%;
+  height: 100%;
+`;
+
 export const ItemImage = styled.img`
-  width: 30%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
 `;

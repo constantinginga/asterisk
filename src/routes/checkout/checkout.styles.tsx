@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 
 export const CheckoutContainer = styled.div`
-  width: 55%;
-  min-height: 90vh;
+  display: flex;
+  align-items: flex-start;
+  gap: 0 2rem;
+  margin: 50px auto 0;
+`;
+
+export const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 50px auto 0;
+`;
+
+export const PaymentContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export const Header = styled.div`
@@ -19,7 +27,7 @@ export const Header = styled.div`
 
 export const HeaderBlock = styled.div`
   text-transform: capitalize;
-  width: 23%;
+  width: 20%;
 
   &:last-child {
     width: 8%;
