@@ -1,9 +1,18 @@
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
+import { Elements } from '@stripe/react-stripe-js';
+import {
+  stripePromise,
+  createPaymentIntent,
+} from '../../utils/stripe/stripe.utils';
 
 import { selectCartItems } from '../../store/cart/cart.selector';
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import PaymentForm from '../../components/payment-form/payment-form.component';
+
+import Spinner from '../../components/spinner/spinner.component';
 
 import {
   CheckoutContainer,
@@ -16,6 +25,20 @@ import {
 
 const Checkout = () => {
   const items = useSelector(selectCartItems);
+  const [clientSecret, setClientSecret] = useState('');
+
+  useEffect(() => {
+    async function fetchPaymentIntent() {
+      const response = await createPaymentIntent(100);
+
+      const {
+        paymentIntent: { client_secret },
+      } = response;
+
+      setClientSecret(client_secret);
+    }
+    fetchPaymentIntent();
+  }, []);
 
   return (
     <CheckoutContainer>
@@ -35,7 +58,13 @@ const Checkout = () => {
         <Subtitle>
           Complete your purchase by entering your payment details.
         </Subtitle>
-        <PaymentForm />
+        {clientSecret && stripePromise ? (
+          <Elements stripe={stripePromise} options={{ clientSecret }}>
+            <PaymentForm />
+          </Elements>
+        ) : (
+          <Spinner />
+        )}
       </PaymentContainer>
     </CheckoutContainer>
   );

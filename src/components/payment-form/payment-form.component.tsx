@@ -1,12 +1,15 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { StripeCardElement } from '@stripe/stripe-js';
+import {
+  CardElement,
+  useStripe,
+  useElements,
+  PaymentElement,
+} from '@stripe/react-stripe-js';
+import { StripeCardElement, StripeElement } from '@stripe/stripe-js';
 import { selectCartTotalAmount } from '../../store/cart/cart.selector';
 import { clearCart } from '../../store/cart/cart.action';
 import { selectCurrentUser } from '../../store/user/user.selector';
-
-import { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
 import {
   PaymentFormContainer,
@@ -18,6 +21,10 @@ import {
 const isValidCardElement = (
   card: StripeCardElement | null
 ): card is StripeCardElement => card !== null;
+
+const isValidPaymentElement = (
+  elem: StripeElement | null
+): elem is StripeElement => elem !== null;
 
 // Billing Details:
 // - email
@@ -42,47 +49,42 @@ const PaymentForm = () => {
 
     setIsProcessingPayment(true);
 
-    const response = await fetch('/.netlify/functions/create-payment-intent', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ amount: amount * 100 }),
-    }).then((res) => res.json());
+    // const response = await createPaymentIntent(amount * 100);
 
-    const {
-      paymentIntent: { client_secret },
-    } = response;
+    // const {
+    //   paymentIntent: { client_secret },
+    // } = response;
 
-    const cardDetails = elements.getElement(CardElement);
+    // const paymentDetails = elements.getElement(PaymentElement);
 
-    if (!isValidCardElement(cardDetails)) return;
+    // if (!isValidPaymentElement(paymentDetails)) return;
 
-    const paymentResult = await stripe.confirmCardPayment(client_secret, {
-      payment_method: {
-        card: cardDetails,
-        billing_details: {
-          name: currentUser ? currentUser.displayName : 'Guest',
-        },
-      },
-    });
+    // const paymentResult = await stripe.confirmCardPayment(client_secret, {
+    //   payment_method: {
 
-    setIsProcessingPayment(false);
+    //     billing_details: {
+    //       name: currentUser ? currentUser.displayName : 'Guest',
+    //     },
+    //   },
+    // });
 
-    if (paymentResult.error) {
-      console.log(paymentResult.error.message);
-    } else {
-      if (paymentResult.paymentIntent.status === 'succeeded') {
-        console.log('Payment succeeded!');
-        dispatch(clearCart());
-      }
-    }
+    // setIsProcessingPayment(false);
+
+    // if (paymentResult.error) {
+    //   console.log(paymentResult.error.message);
+    // } else {
+    //   if (paymentResult.paymentIntent.status === 'succeeded') {
+    //     console.log('Payment succeeded!');
+    //     dispatch(clearCart());
+    //   }
+    // }
   };
 
   return (
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
-        <CardElement />
+        <PaymentElement />
+        {/* <CardElement /> */}
         <TotalAmount>
           <span>Total:</span>
           <span>${amount}</span>
