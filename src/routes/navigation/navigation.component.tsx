@@ -14,6 +14,7 @@ import CartDropdown from '../../components/cart-dropdown/cart-dropdown.component
 import {
   NavigationContainer,
   LogoContainer,
+  NavButton,
   NavLinks,
   NavLink,
 } from './navigation.styles';
@@ -32,7 +33,9 @@ const Navigation = () => {
           <Logo className="logo" />
         </LogoContainer>
         <NavLinks>
-          <NavLink to="/shop">Shop</NavLink>
+          <NavLink to="/shop">
+            <NavButton>Shop</NavButton>
+          </NavLink>
           {currentUser ? (
             <NavLink as="span" onClick={logOutHandler}>
               Log Out

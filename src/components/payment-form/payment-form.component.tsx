@@ -87,9 +87,7 @@ const PaymentForm = () => {
           <span>Total:</span>
           <span>${amount}</span>
         </TotalAmount>
-        <PaymentButton
-          isLoading={isProcessingPayment}
-          buttonType={BUTTON_TYPE_CLASSES.inverted}>
+        <PaymentButton isLoading={isProcessingPayment}>
           Confirm Order
         </PaymentButton>
       </FormContainer>

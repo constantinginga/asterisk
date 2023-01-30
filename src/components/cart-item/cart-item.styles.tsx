@@ -14,10 +14,15 @@ export const ItemDetails = styled.div`
   align-items: flex-start;
   justify-content: center;
   padding: 10px 20px;
+  gap: 0.25rem;
 `;
 
 export const Name = styled.span`
-  font-size: 16px;
+  font-size: 1rem;
+`;
+
+export const Price = styled.span`
+  font-size: 0.9rem;
 `;
 
 export const ItemImageContainer = styled.div`
@@ -30,4 +35,5 @@ export const ItemImage = styled.img`
   height: 100%;
   object-fit: cover;
   border-radius: 1rem;
+  border: 1px solid #cecece;
 `;

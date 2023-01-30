@@ -9,8 +9,8 @@ export const CategoryPreviewContainer = styled.div`
 `;
 
 export const CategoryLink = styled(Link)`
-  font-size: 28px;
-  // margin-bottom: 25px;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;

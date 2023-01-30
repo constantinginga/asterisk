@@ -52,11 +52,11 @@ const CheckoutItem: FC<CheckoutItemProps> = memo(({ item }) => {
       </ImageContainer>
       <Name>{name}</Name>
       <Quantity>
-        <Arrow onClick={removeItemHandler}>&#10094;</Arrow>
+        <Arrow onClick={removeItemHandler}>-</Arrow>
         <QuantityValue>{quantity}</QuantityValue>
-        <Arrow onClick={addItemHandler}>&#10095;</Arrow>
+        <Arrow onClick={addItemHandler}>+</Arrow>
       </Quantity>
-      <Price>${price}</Price>
+      <Price>${quantity * price}</Price>
       <RemoveButton onClick={clearItemHandler}>&#10005;</RemoveButton>
     </CheckoutItemContainer>
   );

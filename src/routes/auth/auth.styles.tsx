@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-export const AuthContainer = styled.div`
+import { Wrapper } from '../../global.styles';
+
+export const AuthContainer = styled(Wrapper)`
   display: flex;
-  justify-content: space-between;
-  width: 900px;
-  margin: 30px auto;
+  justify-content: center;
+  width: 100%;
+  gap: 0 4rem;
+  margin: 2rem 0;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;

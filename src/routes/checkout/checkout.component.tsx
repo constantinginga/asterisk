@@ -8,7 +8,10 @@ import PaymentForm from '../../components/payment-form/payment-form.component';
 import {
   CheckoutContainer,
   SummaryContainer,
+  ItemsContainer,
   PaymentContainer,
+  Title,
+  Subtitle,
 } from './checkout.styles';
 
 const Checkout = () => {
@@ -17,17 +20,21 @@ const Checkout = () => {
   return (
     <CheckoutContainer>
       <SummaryContainer>
-        <h3>Order Summary</h3>
-        <p>Check the items in your cart and select a shipping method.</p>
-        <div>
+        <Title>Order Summary</Title>
+        <Subtitle>
+          Check the items in your cart and select a shipping method.
+        </Subtitle>
+        <ItemsContainer>
           {items.map((item) => (
             <CheckoutItem key={item.id} item={item} />
           ))}
-        </div>
+        </ItemsContainer>
       </SummaryContainer>
       <PaymentContainer>
-        <h3>Payment Details</h3>
-        <p>Complete your purchase by entering your payment details.</p>
+        <Title>Payment Details</Title>
+        <Subtitle>
+          Complete your purchase by entering your payment details.
+        </Subtitle>
         <PaymentForm />
       </PaymentContainer>
     </CheckoutContainer>

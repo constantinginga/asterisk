@@ -6,6 +6,7 @@ import {
   CartItemContainer,
   ItemDetails,
   Name,
+  Price,
   ItemImageContainer,
   ItemImage,
 } from './cart-item.styles';
@@ -22,10 +23,10 @@ const CartItem: FC<CartItemProps> = memo(({ item }) => {
         <ItemImage src={imageUrl} alt={name} />
       </ItemImageContainer>
       <ItemDetails className="item-details">
-        <Name className="name">{name}</Name>
-        <span className="price">
+        <Name>{name}</Name>
+        <Price>
           {quantity} x ${price}
-        </span>
+        </Price>
       </ItemDetails>
     </CartItemContainer>
   );

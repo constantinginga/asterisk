@@ -14,7 +14,7 @@ export const BaseButton = styled.button`
   text-transform: uppercase;
   font-family: 'Inter', sans-serif;
   font-weight: bolder;
-  border: none;
+  border: 1px solid #292d28;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -33,9 +33,11 @@ export const BaseButton = styled.button`
 export const GoogleButton = styled(BaseButton)`
   background-color: #4285f4;
   color: #f8f7f5;
+  border: none;
 
   &:hover {
     background-color: #357ae8;
+    color: #f8f7f5;
     border: none;
   }
 `;
