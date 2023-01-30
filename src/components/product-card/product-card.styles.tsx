@@ -14,6 +14,7 @@ export const ProductCardContainer = styled.div`
     object-fit: cover;
     margin-bottom: 5px;
     border-radius: 1rem;
+    border: 1px solid #cecece;
   }
 
   button {

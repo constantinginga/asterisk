@@ -13,7 +13,7 @@ export const CartDropdownContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border: 1px solid black;
+  border: 1px solid #cecece;
   background-color: white;
   top: 90px;
   right: 40px;
@@ -36,7 +36,7 @@ export const CartItems = styled.div`
   height: 240px;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 export const EmptyMessage = styled.span`

@@ -12,11 +12,21 @@ import {
   PaymentFormContainer,
   FormContainer,
   PaymentButton,
+  TotalAmount,
 } from './payment-form.styles';
 
 const isValidCardElement = (
   card: StripeCardElement | null
 ): card is StripeCardElement => card !== null;
+
+// Billing Details:
+// - email
+// - name
+// - phone
+// - address
+// 	- city
+// 	- country
+// 	- postal_code
 
 const PaymentForm = () => {
   const stripe = useStripe();
@@ -73,6 +83,10 @@ const PaymentForm = () => {
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
         <CardElement />
+        <TotalAmount>
+          <span>Total:</span>
+          <span>${amount}</span>
+        </TotalAmount>
         <PaymentButton
           isLoading={isProcessingPayment}
           buttonType={BUTTON_TYPE_CLASSES.inverted}>
