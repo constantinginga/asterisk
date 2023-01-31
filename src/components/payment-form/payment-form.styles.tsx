@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import Button from '../button/button.component';
+import FormInput from '../form-input/form-input.component';
 
 export const PaymentFormContainer = styled.div`
   // height: 300px;
@@ -15,6 +16,10 @@ export const FormContainer = styled.form`
   min-width: 500px;
 `;
 
+export const ShippingInput = styled(FormInput)`
+  margin: 0;
+`;
+
 export const TotalAmount = styled.div`
   font-weight: 600;
   margin-top: 1rem;
@@ -27,7 +32,7 @@ export const PaymentButton = styled(Button)`
   margin-top: 30px;
 `;
 
-export const ShippingMethodContainer = styled.div`
+export const ShippingDetails = styled.div`
   margin-top: 2rem;
 
   h4 {

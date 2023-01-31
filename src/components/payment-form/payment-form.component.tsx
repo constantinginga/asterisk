@@ -1,4 +1,4 @@
-import { useState, FormEvent, FC } from 'react';
+import { useState, FormEvent, FC, ChangeEvent } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   useStripe,
@@ -17,7 +17,8 @@ import {
   FormContainer,
   PaymentButton,
   TotalAmount,
-  ShippingMethodContainer,
+  ShippingDetails,
+  ShippingInput,
 } from './payment-form.styles';
 
 type PaymentFormProps = {
@@ -25,11 +26,20 @@ type PaymentFormProps = {
   paymentId: string;
 };
 
+const defaultFormFields = {
+  city: '',
+  country: '',
+  postalCode: '',
+  phone: '',
+};
+
 const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { city, country, postalCode, phone } = formFields;
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -70,14 +80,47 @@ const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
     setIsProcessingPayment(false);
   };
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormFields({ ...formFields, [name]: value });
+  };
+
   return (
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
         <PaymentElement />
-        <ShippingMethodContainer>
+        <ShippingDetails>
+          <h3>Shipping Details</h3>
+          <ShippingInput
+            label="City"
+            type="text"
+            name="city"
+            id="city"
+            required
+            onChange={handleChange}
+            value={city}
+          />
+          <ShippingInput
+            label="Postal Code"
+            type="text"
+            name="postalCode"
+            id="postalCode"
+            required
+            onChange={handleChange}
+            value={postalCode}
+          />
+          <ShippingInput
+            label="Phone Number"
+            type="tel"
+            name="phone"
+            id="phone"
+            required
+            onChange={handleChange}
+            value={phone}
+          />
           <h4>Available shipping methods</h4>
           <ShippingMethod />
-        </ShippingMethodContainer>
+        </ShippingDetails>
         <TotalAmount>
           <span>Total:</span>
           <span>${amount}</span>
