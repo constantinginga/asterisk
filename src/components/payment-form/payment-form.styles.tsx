@@ -16,6 +16,8 @@ export const FormContainer = styled.form`
 `;
 
 export const TotalAmount = styled.div`
+  font-weight: 600;
+  margin-top: 1rem;
   display: flex;
   justify-content: space-between;
 `;
@@ -23,4 +25,12 @@ export const TotalAmount = styled.div`
 export const PaymentButton = styled(Button)`
   margin-left: auto;
   margin-top: 30px;
+`;
+
+export const ShippingMethodContainer = styled.div`
+  margin-top: 2rem;
+
+  h4 {
+    margin-bottom: 0.5rem;
+  }
 `;

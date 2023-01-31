@@ -7,7 +7,10 @@ import {
   createPaymentIntent,
 } from '../../utils/stripe/stripe.utils';
 
-import { selectCartItems } from '../../store/cart/cart.selector';
+import {
+  selectCartItems,
+  selectCartTotalAmount,
+} from '../../store/cart/cart.selector';
 
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
 import PaymentForm from '../../components/payment-form/payment-form.component';
@@ -16,6 +19,7 @@ import Spinner from '../../components/spinner/spinner.component';
 
 import {
   CheckoutContainer,
+  EmptyCheckoutContainer,
   SummaryContainer,
   ItemsContainer,
   PaymentContainer,
@@ -25,22 +29,36 @@ import {
 
 const Checkout = () => {
   const items = useSelector(selectCartItems);
+  const amount = useSelector(selectCartTotalAmount);
   const [clientSecret, setClientSecret] = useState('');
+  const [paymentIntentId, setPaymentIntentId] = useState('');
 
   useEffect(() => {
-    async function fetchPaymentIntent() {
-      const response = await createPaymentIntent(100);
-
-      const {
-        paymentIntent: { client_secret },
-      } = response;
-
-      setClientSecret(client_secret);
+    if (!amount) return;
+    if (!paymentIntentId || !clientSecret) {
+      fetchPaymentIntent();
     }
-    fetchPaymentIntent();
-  }, []);
 
-  return (
+    async function fetchPaymentIntent() {
+      const response = await createPaymentIntent(amount);
+
+      if (response.paymentIntent) {
+        const {
+          paymentIntent: { client_secret, id },
+        } = response;
+        if (!client_secret || !id) return;
+
+        setClientSecret(client_secret);
+        setPaymentIntentId(id);
+      }
+    }
+  });
+
+  return items.length === 0 ? (
+    <EmptyCheckoutContainer>
+      <Subtitle>Your cart is empty. Add some items to checkout.</Subtitle>
+    </EmptyCheckoutContainer>
+  ) : (
     <CheckoutContainer>
       <SummaryContainer>
         <Title>Order Summary</Title>
@@ -60,7 +78,7 @@ const Checkout = () => {
         </Subtitle>
         {clientSecret && stripePromise ? (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentForm />
+            <PaymentForm amount={amount} paymentId={paymentIntentId} />
           </Elements>
         ) : (
           <Spinner />

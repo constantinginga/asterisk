@@ -1,45 +1,34 @@
-import { useState, FormEvent, useEffect } from 'react';
+import { useState, FormEvent, FC } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  CardElement,
   useStripe,
   useElements,
   PaymentElement,
 } from '@stripe/react-stripe-js';
-import { StripeCardElement, StripeElement } from '@stripe/stripe-js';
-import { selectCartTotalAmount } from '../../store/cart/cart.selector';
+
+import { updatePaymentIntent } from '../../utils/stripe/stripe.utils';
 import { clearCart } from '../../store/cart/cart.action';
 import { selectCurrentUser } from '../../store/user/user.selector';
+
+import ShippingMethod from '../shipping-method/shipping-method.components';
 
 import {
   PaymentFormContainer,
   FormContainer,
   PaymentButton,
   TotalAmount,
+  ShippingMethodContainer,
 } from './payment-form.styles';
 
-const isValidCardElement = (
-  card: StripeCardElement | null
-): card is StripeCardElement => card !== null;
+type PaymentFormProps = {
+  amount: number;
+  paymentId: string;
+};
 
-const isValidPaymentElement = (
-  elem: StripeElement | null
-): elem is StripeElement => elem !== null;
-
-// Billing Details:
-// - email
-// - name
-// - phone
-// - address
-// 	- city
-// 	- country
-// 	- postal_code
-
-const PaymentForm = () => {
+const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
-  const amount = useSelector(selectCartTotalAmount);
   const currentUser = useSelector(selectCurrentUser);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
@@ -49,42 +38,46 @@ const PaymentForm = () => {
 
     setIsProcessingPayment(true);
 
-    // const response = await createPaymentIntent(amount * 100);
+    await updatePaymentIntent(paymentId, amount, {
+      name: currentUser ? currentUser.displayName : 'Guest',
+      address: {
+        // temporary, replace with values from inputs later
+        city: 'Horsens',
+        country: 'Denmark',
+        postal_code: '8700',
+      },
+      carrier: 'UPS',
+      phone: '50240074',
+    });
 
-    // const {
-    //   paymentIntent: { client_secret },
-    // } = response;
+    const { error, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/success`,
+      },
+      redirect: 'if_required',
+    });
 
-    // const paymentDetails = elements.getElement(PaymentElement);
+    if (error) {
+      console.log(error.message);
+    } else {
+      if (paymentIntent.status === 'succeeded') {
+        console.log('Payment succeeded!');
+        dispatch(clearCart());
+      }
+    }
 
-    // if (!isValidPaymentElement(paymentDetails)) return;
-
-    // const paymentResult = await stripe.confirmCardPayment(client_secret, {
-    //   payment_method: {
-
-    //     billing_details: {
-    //       name: currentUser ? currentUser.displayName : 'Guest',
-    //     },
-    //   },
-    // });
-
-    // setIsProcessingPayment(false);
-
-    // if (paymentResult.error) {
-    //   console.log(paymentResult.error.message);
-    // } else {
-    //   if (paymentResult.paymentIntent.status === 'succeeded') {
-    //     console.log('Payment succeeded!');
-    //     dispatch(clearCart());
-    //   }
-    // }
+    setIsProcessingPayment(false);
   };
 
   return (
     <PaymentFormContainer>
       <FormContainer onSubmit={paymentHandler}>
         <PaymentElement />
-        {/* <CardElement /> */}
+        <ShippingMethodContainer>
+          <h4>Available shipping methods</h4>
+          <ShippingMethod />
+        </ShippingMethodContainer>
         <TotalAmount>
           <span>Total:</span>
           <span>${amount}</span>

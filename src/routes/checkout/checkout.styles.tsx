@@ -8,10 +8,16 @@ export const CheckoutContainer = styled(Wrapper)`
   padding: 0;
 `;
 
+export const EmptyCheckoutContainer = styled(Wrapper)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SummaryContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 3;
   background-color: #fff;
   padding: 2rem 2.5rem;
 `;
@@ -19,11 +25,12 @@ export const SummaryContainer = styled.div`
 export const PaymentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 2;
   padding: 2rem 2.5rem;
 `;
 
 export const ItemsContainer = styled.div`
+  overflow: auto;
   border: 1px solid #cecece;
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
