@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
+import { MainDarkColor, MainLightColor } from '../../global.styles';
 
 const subColor = 'grey';
-const mainColor = '#292d28';
 
 const shrinkLabelStyles = css`
   top: -14px;
   font-size: 12px;
-  color: ${mainColor};
+  color: ${MainDarkColor};
 `;
 
 type FormInputLabelProps = {
@@ -28,8 +28,8 @@ export const FormInputLabel = styled.label<FormInputLabelProps>`
 
 export const Input = styled.input`
   background: none;
-  background-color: #f8f7f5;
-  color: ${mainColor};
+  background-color: ${MainLightColor};
+  color: ${MainDarkColor};
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   display: block;

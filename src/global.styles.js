@@ -1,13 +1,16 @@
 import styled, {createGlobalStyle} from 'styled-components';
 
+export const MainLightColor = '#F8F7F5';
+export const MainDarkColor = '#292d28';
+
 export const GlobalStyle = createGlobalStyle`
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #F8F7F5;
-    color: #292d28;
+    background-color: ${MainLightColor};
+    color: ${MainDarkColor};
 
     @media screen and (max-width: 800px) {
         // padding: 10px;
@@ -21,7 +24,7 @@ body {
   
   a {
     text-decoration: none;
-    color: #292d28;
+    color: ${MainDarkColor};
   }
   
   * {

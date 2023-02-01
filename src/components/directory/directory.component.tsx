@@ -1,4 +1,4 @@
-import { DirectoryContainer } from './directory.styles';
+import { DirectoryContainer, DirectoryItems, Title } from './directory.styles';
 import DirectoryItem from '../directory-item/directory-item.component';
 
 export type DirectoryCategory = {
@@ -44,9 +44,12 @@ const categories: DirectoryCategory[] = [
 const Directory = () => {
   return (
     <DirectoryContainer>
-      {categories.map((item) => (
-        <DirectoryItem key={item.id} item={item} />
-      ))}
+      <Title>Shop by category</Title>
+      <DirectoryItems>
+        {categories.map((item) => (
+          <DirectoryItem key={item.id} item={item} />
+        ))}
+      </DirectoryItems>
     </DirectoryContainer>
   );
 };

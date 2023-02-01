@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { MainDarkColor, MainLightColor } from '../../global.styles';
+
 export const CheckoutItemContainer = styled.div`
   width: 100%;
   display: flex;
@@ -50,8 +52,8 @@ export const Arrow = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #292d28;
-  color: #f8f7f5;
+  background-color: ${MainDarkColor};
+  color: ${MainLightColor};
 `;
 
 export const RemoveButton = styled.div`
