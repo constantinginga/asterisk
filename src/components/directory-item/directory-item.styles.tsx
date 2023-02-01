@@ -25,6 +25,7 @@ export const Body = styled.div`
   background-color: ${MainLightColor};
   // opacity: 0.7;
   position: absolute;
+  border-radius: 1rem;
 
   h2 {
     font-weight: bold;
