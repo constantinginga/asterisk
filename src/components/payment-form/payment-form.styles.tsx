@@ -16,9 +16,7 @@ export const FormContainer = styled.form`
   min-width: 500px;
 `;
 
-export const ShippingInput = styled(FormInput)`
-  margin: 0;
-`;
+export const Input = styled(FormInput)``;
 
 export const TotalAmount = styled.div`
   font-weight: 600;
@@ -35,7 +33,29 @@ export const PaymentButton = styled(Button)`
 export const ShippingDetails = styled.div`
   margin-top: 2rem;
 
+  h3,
   h4 {
     margin-bottom: 0.5rem;
+  }
+`;
+
+export const ShippingContainer = styled.div`
+  display: flex;
+  gap: 0 2rem;
+
+  div:first-of-type {
+    flex: 2;
+  }
+
+  div:last-of-type {
+    flex: 1;
+  }
+`;
+
+export const InputContainer = styled.div`
+  margin: 1rem 0;
+
+  ${Input} {
+    margin: 0;
   }
 `;

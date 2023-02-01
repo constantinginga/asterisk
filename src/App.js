@@ -9,6 +9,7 @@ import { checkUserSession } from './store/user/user.action';
 
 const Shop = lazy(() => import('./routes/shop/shop.component'));
 const Checkout = lazy(() => import('./routes/checkout/checkout.component'));
+const CheckoutSuccess = lazy(() => import('./routes/checkout-success/checkout-success.component'));
 const Home = lazy(() => import('./routes/home/home.component'));
 const Auth = lazy(() => import('./routes/auth/auth.component'));
 const Navigation = lazy(() =>
@@ -34,7 +35,10 @@ const App = () => {
           <Route index element={<Home />} />
           <Route path="auth" element={<Auth />} />
           <Route path="shop/*" element={<Shop />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route path="checkout">
+            <Route index element={<Checkout />} />
+            <Route path="success" element={<CheckoutSuccess />} />
+          </Route>
         </Route>
       </Routes>
     </Suspense>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { Elements } from '@stripe/react-stripe-js';

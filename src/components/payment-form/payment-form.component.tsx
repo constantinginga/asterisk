@@ -18,7 +18,9 @@ import {
   PaymentButton,
   TotalAmount,
   ShippingDetails,
-  ShippingInput,
+  Input,
+  InputContainer,
+  ShippingContainer,
 } from './payment-form.styles';
 
 type PaymentFormProps = {
@@ -28,7 +30,6 @@ type PaymentFormProps = {
 
 const defaultFormFields = {
   city: '',
-  country: '',
   postalCode: '',
   phone: '',
 };
@@ -39,7 +40,7 @@ const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectCurrentUser);
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { city, country, postalCode, phone } = formFields;
+  const { city, postalCode, phone } = formFields;
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const paymentHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -51,31 +52,40 @@ const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
     await updatePaymentIntent(paymentId, amount, {
       name: currentUser ? currentUser.displayName : 'Guest',
       address: {
-        // temporary, replace with values from inputs later
-        city: 'Horsens',
-        country: 'Denmark',
-        postal_code: '8700',
+        city: city,
+        postal_code: postalCode,
       },
       carrier: 'UPS',
-      phone: '50240074',
+      phone: phone,
     });
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: `${window.location.origin}/success`,
-      },
-      redirect: 'if_required',
-    });
+    await stripe
+      .confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.href}/success`,
+        },
+        //redirect: 'if_required',
+      })
+      .then((res) => {
+        if (res.error) {
+          console.log(res.error.message);
+        } else {
+          console.log('Payment succeeded!');
+          dispatch(clearCart());
+        }
+      });
 
-    if (error) {
-      console.log(error.message);
-    } else {
-      if (paymentIntent.status === 'succeeded') {
-        console.log('Payment succeeded!');
-        dispatch(clearCart());
-      }
-    }
+    // if (error) {
+    //   console.log(error.message);
+    // } else {
+    //   // if (paymentIntent.status === 'succeeded') {
+    //   //   console.log('Payment succeeded!');
+    //   //   dispatch(clearCart());
+    //   // }
+    //   console.log('Payment succeeded!');
+    //   dispatch(clearCart());
+    // }
 
     setIsProcessingPayment(false);
   };
@@ -91,33 +101,41 @@ const PaymentForm: FC<PaymentFormProps> = ({ amount, paymentId }) => {
         <PaymentElement />
         <ShippingDetails>
           <h3>Shipping Details</h3>
-          <ShippingInput
-            label="City"
-            type="text"
-            name="city"
-            id="city"
-            required
-            onChange={handleChange}
-            value={city}
-          />
-          <ShippingInput
-            label="Postal Code"
-            type="text"
-            name="postalCode"
-            id="postalCode"
-            required
-            onChange={handleChange}
-            value={postalCode}
-          />
-          <ShippingInput
-            label="Phone Number"
-            type="tel"
-            name="phone"
-            id="phone"
-            required
-            onChange={handleChange}
-            value={phone}
-          />
+          <ShippingContainer>
+            <InputContainer>
+              <Input
+                label="City"
+                type="text"
+                name="city"
+                id="city"
+                required
+                onChange={handleChange}
+                value={city}
+              />
+            </InputContainer>
+            <InputContainer>
+              <Input
+                label="Postal Code"
+                type="text"
+                name="postalCode"
+                id="postalCode"
+                required
+                onChange={handleChange}
+                value={postalCode}
+              />
+            </InputContainer>
+          </ShippingContainer>
+          <InputContainer>
+            <Input
+              label="Phone Number"
+              type="tel"
+              name="phone"
+              id="phone"
+              required
+              onChange={handleChange}
+              value={phone}
+            />
+          </InputContainer>
           <h4>Available shipping methods</h4>
           <ShippingMethod />
         </ShippingDetails>

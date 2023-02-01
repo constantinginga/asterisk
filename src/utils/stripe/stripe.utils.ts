@@ -5,7 +5,6 @@ import { PaymentIntentResult } from '@stripe/stripe-js';
 type Address = {
   city: string;
   postal_code: string;
-  country: string;
 };
 
 type Shipping = {

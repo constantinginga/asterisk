@@ -3,7 +3,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 exports.handler = async (event) => {
     try {
-        const { amount, id, shipping: {name, address: {city, postal_code, country}, carrier, phone} } = JSON.parse(event.body);
+        const { amount, id, shipping: {name, address: {city, postal_code}, carrier, phone} } = JSON.parse(event.body);
         const paymentIntent = await stripe.paymentIntents.update(id, {
             amount,
             shipping: {
@@ -11,7 +11,6 @@ exports.handler = async (event) => {
                 address: {
                     city,
                     postal_code,
-                    country
                 },
                 carrier,
                 phone
