@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BorderColor } from '../../global.styles';
+
 import { Link } from 'react-router-dom';
 
 import Button from '../../components/button/button.component';
@@ -9,12 +11,13 @@ export const NavigationContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #cecece;
+  border-bottom: 1px solid ${BorderColor};
   padding: 1rem 2.5rem;
   background: #fff;
 
   @media screen and (max-width: 800px) {
     height: 60px;
+    padding: 1rem 0.75rem;
   }
 `;
 
@@ -28,7 +31,7 @@ export const LogoContainer = styled(Link)`
 
   @media screen and (max-width: 800px) {
     width: 50px;
-    padding: 0;
+    padding: 10px;
   }
 `;
 
@@ -40,7 +43,7 @@ export const NavLinks = styled.div`
   justify-content: flex-end;
 
   @media screen and (max-width: 800px) {
-    width: 80%;
+    width: 90%;
   }
 `;
 

@@ -10,6 +10,10 @@ export const ShippingMethodContainer = styled.div`
   background: #fff;
   padding: 1rem 2.5rem;
   cursor: pointer;
+
+  @media screen and (max-width: 550px) {
+    padding: 1rem 0.75rem;
+  }
 `;
 
 export const LogoContainer = styled.div`

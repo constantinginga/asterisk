@@ -2,6 +2,7 @@ import styled, {createGlobalStyle} from 'styled-components';
 
 export const MainLightColor = '#F8F7F5';
 export const MainDarkColor = '#292d28';
+export const BorderColor = '#cecece';
 
 export const GlobalStyle = createGlobalStyle`
 body {
@@ -11,10 +12,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: ${MainLightColor};
     color: ${MainDarkColor};
-
-    @media screen and (max-width: 800px) {
-        // padding: 10px;
-    }
   }
   
   code {
@@ -47,4 +44,8 @@ body {
 export const Wrapper = styled.div`
   flex: 1 1 auto;
   padding: 0 2.5rem;
+
+  @media screen and (max-width: 800px) {
+    padding: 0 0.75rem;
+}
 `;

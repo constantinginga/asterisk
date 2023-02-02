@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BorderColor } from '../../global.styles';
+
 import {
   BaseButton,
   GoogleButton,
@@ -13,7 +15,7 @@ export const CartDropdownContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  border: 1px solid #cecece;
+  border: 1px solid ${BorderColor};
   background-color: white;
   top: 90px;
   right: 40px;
@@ -27,8 +29,8 @@ export const CartDropdownContainer = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    top: 60px;
-    right: 30px;
+    top: 70px;
+    right: 20px;
   }
 `;
 

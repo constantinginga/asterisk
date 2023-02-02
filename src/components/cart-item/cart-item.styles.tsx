@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BorderColor } from '../../global.styles';
+
 export const CartItemContainer = styled.div`
   width: 100%;
   display: flex;
@@ -35,5 +37,5 @@ export const ItemImage = styled.img`
   height: 100%;
   object-fit: cover;
   border-radius: 1rem;
-  border: 1px solid #cecece;
+  border: 1px solid ${BorderColor};
 `;

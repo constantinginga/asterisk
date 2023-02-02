@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { BorderColor } from '../../global.styles';
+
 export const ProductCardContainer = styled.div`
   width: 100%;
   display: flex;
@@ -14,7 +16,7 @@ export const ProductCardContainer = styled.div`
     object-fit: cover;
     margin-bottom: 5px;
     border-radius: 1rem;
-    border: 1px solid #cecece;
+    border: 1px solid ${BorderColor};
   }
 
   button {
@@ -39,7 +41,6 @@ export const ProductCardContainer = styled.div`
   @media screen and (max-width: 800px) {
     button {
       display: flex;
-      // opacity: 0.9;
       min-width: unset;
       padding: 0 10px;
     }

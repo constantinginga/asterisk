@@ -24,6 +24,10 @@ export const Preview = styled.div`
 
   @media screen and (max-width: 800px) {
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
+    grid-gap: 1.5rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    grid-template-columns: 1fr;
   }
 `;

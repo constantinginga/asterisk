@@ -4,16 +4,18 @@ import Button from '../button/button.component';
 import FormInput from '../form-input/form-input.component';
 
 export const PaymentFormContainer = styled.div`
-  // height: 300px;
   display: flex;
   flex-direction: column;
-  // align-items: center;
   justify-content: center;
 `;
 
 export const FormContainer = styled.form`
   height: 100px;
   min-width: 500px;
+
+  @media screen and (max-width: 550px) {
+    min-width: 100%;
+  }
 `;
 
 export const Input = styled(FormInput)``;
@@ -26,7 +28,7 @@ export const TotalAmount = styled.div`
 `;
 
 export const PaymentButton = styled(Button)`
-  margin-left: auto;
+  width: 100%;
   margin-top: 30px;
 `;
 
@@ -49,6 +51,10 @@ export const ShippingContainer = styled.div`
 
   div:last-of-type {
     flex: 1;
+  }
+
+  @media screen and (max-width: 550px) {
+    flex-direction: column;
   }
 `;
 

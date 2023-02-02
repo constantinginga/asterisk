@@ -1,11 +1,34 @@
 import styled from 'styled-components';
 
-import { Wrapper } from '../../global.styles';
+import { Wrapper, BorderColor } from '../../global.styles';
+
+export const SummaryContainer = styled.div`
+  flex: 3;
+  background-color: #fff;
+`;
+
+export const PaymentContainer = styled.div`
+  flex: 2;
+`;
 
 export const CheckoutContainer = styled(Wrapper)`
   display: flex;
   height: 100%;
   padding: 0;
+
+  ${SummaryContainer}, ${PaymentContainer} {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 2.5rem;
+  }
+
+  @media screen and (max-width: 1100px) {
+    flex-direction: column;
+
+    ${SummaryContainer}, ${PaymentContainer} {
+      padding: 1rem 0.75rem;
+    }
+  }
 `;
 
 export const EmptyCheckoutContainer = styled(Wrapper)`
@@ -14,24 +37,9 @@ export const EmptyCheckoutContainer = styled(Wrapper)`
   align-items: center;
 `;
 
-export const SummaryContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 3;
-  background-color: #fff;
-  padding: 2rem 2.5rem;
-`;
-
-export const PaymentContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 2;
-  padding: 2rem 2.5rem;
-`;
-
 export const ItemsContainer = styled.div`
   overflow: auto;
-  border: 1px solid #cecece;
+  border: 1px solid ${BorderColor};
   border-radius: 0.5rem;
   padding: 0.5rem 1rem;
 `;

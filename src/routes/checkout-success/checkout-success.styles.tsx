@@ -8,4 +8,9 @@ export const CheckoutSuccessContainer = styled(Wrapper)`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+
+  h2,
+  p {
+    text-align: center;
+  }
 `;

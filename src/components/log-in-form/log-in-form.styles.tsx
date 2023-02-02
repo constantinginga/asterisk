@@ -17,6 +17,7 @@ export const LogInContainer = styled.div`
 export const ButtonsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  gap: 0 1rem;
 
   @media screen and (max-width: 800px) {
     flex-direction: column;

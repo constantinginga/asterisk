@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { MainLightColor } from '../../global.styles';
+import { BorderColor, MainLightColor } from '../../global.styles';
 
 type BackgroundImageProps = {
   imageUrl: string;
@@ -23,7 +23,7 @@ export const Body = styled.div`
   justify-content: center;
   border: 1px solid black;
   background-color: ${MainLightColor};
-  // opacity: 0.7;
+  border: 1px solid ${BorderColor};
   position: absolute;
   border-radius: 1rem;
 
@@ -39,6 +39,11 @@ export const Body = styled.div`
     font-weight: lighter;
     font-size: 16px;
   }
+
+  @media screen and (max-width: 800px) {
+    padding: 0 0.5rem;
+    height: 80px;
+  }
 `;
 
 export const DirectoryItemContainer = styled.div`
@@ -51,6 +56,7 @@ export const DirectoryItemContainer = styled.div`
   border-radius: 1rem;
   margin: 0 7.5px 15px;
   overflow: hidden;
+  border: 1px solid ${BorderColor};
 
   &:hover {
     cursor: pointer;
@@ -71,5 +77,10 @@ export const DirectoryItemContainer = styled.div`
 
   @media screen and (max-width: 800px) {
     height: 200px;
+    min-width: 40%;
+  }
+
+  @media screen and (max-width: 450px) {
+    min-width: 50%;
   }
 `;
