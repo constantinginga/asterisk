@@ -1,7 +1,7 @@
 # Asterisk
 
 ![Asterisk](https://constantout.com/assets/asterisk-thumb-221455eb.png)
-[Live demo](https://euphonious-capybara-b5ee22.netlify.app/)
+[Live demo](https://asterisk-store.vercel.app/)
 
 ## Description
 

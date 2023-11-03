@@ -21,7 +21,7 @@ export const stripePromise = loadStripe(
 export const createPaymentIntent = async (
   amount: number
 ): Promise<PaymentIntentResult> => {
-  const response = await fetch('/.netlify/functions/create-payment-intent', {
+  const response = await fetch('/app/create-payment-intent', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ export const updatePaymentIntent = async (
   amount: number,
   shipping: Shipping
 ): Promise<PaymentIntentResult> => {
-  const response = await fetch('/.netlify/functions/update-payment-intent', {
+  const response = await fetch('/app/update-payment-intent', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
