@@ -1,11 +1,12 @@
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-exports.handler = async (event, context, callback) => {
+exports.handler = async function (event, context, callback) {
   try {
     const { amount } = JSON.parse(event.body);
+
     const paymentIntent = await stripe.paymentIntents.create({
-      amount,
+      amount: amount,
       currency: 'usd',
       automatic_payment_methods: {
         enabled: true,
@@ -14,7 +15,7 @@ exports.handler = async (event, context, callback) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify('test success'),
+      body: JSON.stringify('test success: ', amount),
     }
   } catch (error) {
     console.log({ error });
