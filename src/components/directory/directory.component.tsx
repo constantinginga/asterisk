@@ -61,9 +61,8 @@ const Directory = () => {
       <HeaderContainer>
         <HeaderTextContainer>
           <h1>
-            Welcome to <span>Asterisk</span>! 👋
+          The one-stop shop <br/> for all your clothing needs.
           </h1>
-          <p>The one-stop shop for all your clothing needs.</p>
           <Link to={'/shop'}>
             <Button>Shop now</Button>
           </Link>
