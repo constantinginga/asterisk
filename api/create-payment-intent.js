@@ -21,7 +21,7 @@ exports.handler = async (event, context, callback) => {
 
     return {
       statusCode: 500,
-      body: JSON.stringify('error'),
+      body: JSON.stringify('error: ' + error.message),
     }
   }
 }
