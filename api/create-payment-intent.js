@@ -14,14 +14,14 @@ exports.handler = async (event, context, callback) => {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ paymentIntent }),
+      body: JSON.stringify('test success'),
     }
   } catch (error) {
     console.log({ error });
 
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify('error'),
     }
   }
 }
